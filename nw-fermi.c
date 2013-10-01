@@ -502,7 +502,7 @@ static void fermi_bulk_read_complete(struct urb* urb)
 	int retval = 0;
 
 	if (urb->status) {
-		dbg("URB Status: %d\n", urb->status);
+		//dbg("URB Status: %d\n", urb->status);
 		switch(urb->status) {
 		/* device gone, unplugged or unlinked */
 		case -ECONNRESET:
