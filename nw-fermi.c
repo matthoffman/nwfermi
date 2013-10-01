@@ -108,6 +108,8 @@ static struct usb_device_id fermi_table [] = {
 	{ USB_DEVICE(0x1926, 0x0095) },
 	{ USB_DEVICE(0x1926, 0x0096) },
 	{ USB_DEVICE(0x1926, 0x009A) },
+	{ USB_DEVICE(0x1926, 0x1843) },
+	{ USB_DEVICE(0x1926, 0x1875) },
 	/* Lister devices */
 	{ USB_DEVICE(0x1926, 0x09C4) },
 	{ USB_DEVICE(0x1926, 0x0BB8) },
