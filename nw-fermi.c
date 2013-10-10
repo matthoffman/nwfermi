@@ -370,15 +370,15 @@ static ssize_t fermi_read(struct file *file, char *buffer, size_t count, loff_t 
 		else {
 			/* read from the fifo to an interim buffer */
 #ifdef NEW_KFIFO
-			retval = kfifo_out_locked(&dev->bulk_fifo,
-					(unsigned char *)dev->bulk_interim_buf,
+			retval = kfifo_out_locked(&dev->bulk_fifo, 
+					(unsigned char *)dev->bulk_interim_buf, 
 					min(count, (size_t)BULK_FIFO_SIZE),
-					&dev->bulk_lock);
+					&dev->bulk_lock); 
 #else
-			retval = kfifo_get(dev->bulk_fifo,
-					(unsigned char *)dev->bulk_interim_buf,
-					min(count, (size_t)BULK_FIFO_SIZE));
-#endif
+			retval = kfifo_get(dev->bulk_fifo, 
+					(unsigned char *)dev->bulk_interim_buf, 
+					min(count, (size_t)BULK_FIFO_SIZE)); 
+#endif 
 
 			if (retval > 0) {
 				/* read from the interim buffer to user buffer */
@@ -464,7 +464,7 @@ static ssize_t fermi_write(struct file *file, const char *user_buffer,
 		goto end;
 	}
 
-	/* fire data to input subsystem */
+	/* fire data to input subsystem */ 
 	if (count >= sizeof(struct fermi_touch_report_t))
 	{
 		fermi_input_event(dev, (struct fermi_touch_report_t*)buf);
@@ -502,7 +502,7 @@ static void fermi_bulk_read_complete(struct urb* urb)
 	int retval = 0;
 
 	if (urb->status) {
-		//dbg("URB Status: %d\n", urb->status);
+		// dbg("URB Status: %d\n", urb->status); 
 		switch(urb->status) {
 		/* device gone, unplugged or unlinked */
 		case -ECONNRESET:
@@ -541,7 +541,7 @@ static void fermi_bulk_read_complete(struct urb* urb)
 			/* re-initialize the urb */
 			usb_fill_bulk_urb(urb, dev->udev,
 					usb_rcvbulkpipe(dev->udev, dev->bulk_in_endpointAddr),
-					urb->transfer_buffer, urb->transfer_buffer_length,
+					urb->transfer_buffer, urb->transfer_buffer_length, 
 					fermi_bulk_read_complete, dev);
 			urb->transfer_flags |= URB_NO_TRANSFER_DMA_MAP;
 
@@ -565,9 +565,9 @@ static void fermi_bulk_read_complete(struct urb* urb)
 static int fermi_start_bulk_reads(struct usb_fermi* dev)
 {
 	int retval = -ENOMEM;
-	struct urb* urb=NULL;
+	struct urb* urb=NULL;		
 	char* buf = NULL;
-
+	
 	/* create an URB */
 	urb = usb_alloc_urb(0, GFP_KERNEL);
 	if (!urb)
